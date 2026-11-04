@@ -1,4 +1,4 @@
-var CACHE="bajar-bondhu-v4";
+var CACHE="bajar-bondhu-v6";
 var FILES=["./","./index.html","./manifest.json","./icon.svg","./icon-192.png","./icon-512.png"];
 self.addEventListener("install",function(e){e.waitUntil(caches.open(CACHE).then(function(c){return c.addAll(FILES)}));self.skipWaiting()});
 self.addEventListener("activate",function(e){e.waitUntil(caches.keys().then(function(k){return Promise.all(k.filter(function(n){return n!==CACHE}).map(function(n){return caches.delete(n)}))}))});
