@@ -1,14 +1,14 @@
 {
-  "name": "বাজারবন্ধু",
-  "short_name": "বাজারবন্ধু",
-  "description": "কিনুন সহজে, বিক্রি করুন নিশ্চিন্তে! নতুন-পুরাতন সব পণ্যের কেনাবেচা হোক এক জায়গায়।",
+  "name": "বাজার বন্ধু",
+  "short_name": "বাজার বন্ধু",
+  "description": "ক্রেতা ও বিক্রেতার বিশ্বস্ত মার্কেটপ্লেস",
   "lang": "bn",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#ffffff",
-  "theme_color": "#1c8f2e",
+  "theme_color": "#0b6b4f",
   "icons": [
     {
       "src": "icon-192.png",
@@ -23,7 +23,7 @@
       "purpose": "any"
     },
     {
-      "src": "icon-512.png",
+      "src": "icon-maskable-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
