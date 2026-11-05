@@ -90,6 +90,33 @@ fieldset{border:1px solid var(--ln);border-radius:10px;padding:10px 12px;display
 .pay{background:var(--wash);border-radius:10px;padding:10px 12px;display:grid;gap:8px}.pay[hidden]{display:none}
 .pay .num{font-weight:700;font-size:1.05rem;letter-spacing:.5px}
 .ok-box{text-align:center;max-width:520px;margin:30px auto}.ok-box .tick{font-size:3.5rem}
+header{position:static;background:linear-gradient(170deg,var(--br),var(--br2));border-radius:0 0 28px 28px}
+.bar{display:grid;grid-template-columns:1fr auto;gap:10px;padding:12px 16px 16px}
+.logo b{display:block;font-size:1.4rem;line-height:1.1}.logo em{font-style:normal;color:#ffb347}.logo small{display:block;font-size:.7rem;font-weight:400;opacity:.9}
+.hb{display:flex;gap:8px}.hb button{width:42px;height:42px;border-radius:50%;border:0;background:rgba(255,255,255,.2);font-size:1.15rem}
+.search{grid-column:1/-1;display:flex;gap:8px;min-width:0}.search input{flex:1;min-width:0;padding:12px 18px;border-radius:99px}
+#flt{width:46px;border-radius:50%;border:0;background:var(--ac);font-size:1.1rem}
+.role{display:flex;margin:12px 16px 0;background:var(--wash);border-radius:99px;padding:4px;max-width:480px}.role button{flex:1;border:0;background:none;padding:8px;border-radius:99px;font-weight:600}.role button[aria-pressed=true]{background:var(--br);color:#fff}
+body.seller .search{display:none}body.seller .b,body:not(.seller) .s{display:none!important}
+#app{padding-bottom:100px}
+nav.bn{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--sf);border-radius:22px 22px 0 0;box-shadow:0 -4px 18px rgba(0,0,0,.14);display:flex;justify-content:space-around;padding:8px 4px calc(8px + env(safe-area-inset-bottom,0px))}
+nav.bn button{all:unset;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:1px;font-size:.78rem;color:var(--mu);position:relative;padding:2px 10px;font-family:inherit}
+nav.bn button:focus-visible{outline:3px solid var(--ac)}nav.bn i{font-style:normal;font-size:1.4rem}nav.bn button.on{color:var(--br);font-weight:700}
+nav.bn em{position:absolute;top:-4px;right:2px;background:#e53935;color:#fff;border-radius:99px;font-size:.7rem;font-style:normal;padding:0 6px}
+.bnr{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;margin:14px 0 6px;border-radius:20px;scrollbar-width:none}.bnr::-webkit-scrollbar{display:none}
+.sl{flex:0 0 100%;scroll-snap-align:start;min-height:170px;padding:18px;display:flex;align-items:center;justify-content:space-between;gap:10px;color:#fff}
+.sl h2{margin:0 0 10px;font-size:1.25rem;line-height:1.3}.sl .cta{background:#f28c28;color:#fff;border:0;border-radius:99px;padding:8px 16px;font-weight:700}.sl .em{font-size:4.5rem}
+.dots{display:flex;justify-content:center;gap:6px;margin:6px 0 14px}.dots i{width:26px;height:6px;border-radius:9px;background:var(--ln)}.dots i.on{background:var(--br)}
+.cats{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.tile{background:var(--sf);border:1px solid var(--ln);border-radius:16px;padding:10px 2px;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:.78rem;text-align:center;line-height:1.2}.tile span{font-size:1.7rem}.tile[aria-pressed=true]{border-color:var(--br);background:var(--wash)}
+.hd2{display:flex;justify-content:space-between;align-items:center;margin:20px 0 10px}.hd2 h2{margin:0;font-size:1.25rem}
+.hrow{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x proximity;padding-bottom:6px}.hrow .pc{flex:0 0 44%;scroll-snap-align:start}
+.pg{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}@media(min-width:700px){.pg{grid-template-columns:repeat(4,1fr)}.hrow .pc{flex-basis:200px}}
+.pc{background:var(--sf);border:1px solid var(--ln);border-radius:16px;padding:10px;position:relative;min-width:0}
+.pc .pi{background:var(--wash);border-radius:12px;font-size:3.2rem;text-align:center;padding:14px 0;cursor:pointer}
+.pc h3{margin:8px 0 0;font-size:.95rem;line-height:1.3;cursor:pointer}.pc .pr{font-weight:700;font-size:1.05rem;padding-right:40px}
+.pc .add{position:absolute;right:8px;bottom:8px;width:36px;height:36px;border-radius:50%;border:0;background:var(--br);color:#fff}.pc .add:disabled{background:var(--mu)}
+.offer{margin:18px 0;border-radius:18px;padding:16px;background:linear-gradient(100deg,#ffd54a,#ffb300);color:#4a2f00;display:flex;justify-content:space-between;align-items:center}
 #toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--tx);color:var(--bg);padding:10px 18px;border-radius:10px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:50}
 #toast.show{opacity:1}
 .empty{text-align:center;color:var(--mu);padding:30px}
@@ -98,18 +125,23 @@ footer{text-align:center;color:var(--mu);padding:20px;font-size:.88rem}
 </head>
 <body>
 <header><div class="bar">
-  <div class="logo"><i>বা</i>বাজার বন্ধু</div>
-  <div class="search"><input id="q" type="search" placeholder="পণ্য, ক্যাটাগরি বা বিক্রেতা খুঁজুন…" aria-label="পণ্য খুঁজুন"></div>
-  <nav>
-    <button data-v="shop" class="on">বাজার</button>
-    <button data-v="sell">বিক্রি করুন</button>
-    <button data-v="dash">ড্যাশবোর্ড</button>
-    <button class="cartbtn" id="cartBtn">🛒 কার্ট (<span id="cc">০</span>)</button>
-  </nav>
+  <div class="logo"><svg viewBox="0 0 48 48" width="44" height="44" aria-hidden="true"><path d="M14 18c0-7 4-11 10-11s10 4 10 11" fill="none" stroke="#ffb347" stroke-width="3.5" stroke-linecap="round"/><rect x="6" y="17" width="36" height="26" rx="6" fill="#fff"/><text x="24" y="38" text-anchor="middle" font-size="22" font-weight="800" fill="#0b6b4f" font-family="Arial,sans-serif">B</text></svg><span><b>Bazar<em>Bondhu</em></b><small>Buy • Sell • Grow Together</small></span></div>
+  <div class="hb"><button id="bell" aria-label="নোটিফিকেশন">🔔</button><button data-v="dash" aria-label="প্রোফাইল ও অর্ডার">👤</button></div>
+  <div class="search"><input id="q" type="search" placeholder="কী খুঁজছেন?" aria-label="পণ্য খুঁজুন"><button id="flt" aria-label="সাজান">⚙️</button></div>
 </div></header>
+<div class="role" role="group" aria-label="আপনি কে"><button data-role="buyer" aria-pressed="true">🛒 ক্রেতা</button><button data-role="seller" aria-pressed="false">🏪 বিক্রেতা</button></div>
 
 <main id="app"></main>
-<footer>© বাজার বন্ধু — বিশ্বস্ত ক্রয়-বিক্রয়ের ঠিকানা</footer>
+<nav class="bn" aria-label="প্রধান মেনু">
+  <button data-v="shop" class="b"><i>🏠</i><span>হোম</span></button>
+  <button data-go="cats" class="b"><i>▦</i><span>ক্যাটাগরি</span></button>
+  <button id="cartBtn" class="b"><i>🛒</i><span>কার্ট</span><em id="cc" hidden>০</em></button>
+  <button data-v="dash" class="b"><i>👤</i><span>প্রোফাইল</span></button>
+  <button data-v="sdash" class="s"><i>📊</i><span>আমার দোকান</span></button>
+  <button data-v="sell" class="s"><i>➕</i><span>পণ্য তুলুন</span></button>
+  <button data-role="buyer" class="s"><i>🛍️</i><span>কেনাকাটা</span></button>
+</nav>
+<footer hidden>© বাজার বন্ধু — বিশ্বস্ত ক্রয়-বিক্রয়ের ঠিকানা</footer>
 
 <aside id="drawer" aria-label="কার্ট" aria-hidden="true" inert>
   <div class="hd"><b id="dt">আপনার কার্ট</b><button class="btn ghost" id="closeCart">বন্ধ করুন</button></div>
@@ -166,7 +198,7 @@ var SEED=[
 var STATE_V=3;
 var PAY={bkash:"০১XXXXXXXXX",nagad:"০১XXXXXXXXX"}; /* ← এখানে নিজের বিকাশ/নগদ নম্বর বসান */
 var STOCK_KEY="sold";
-var st={products:SEED.slice(),orders:[],cart:{},addr:null,view:"shop",cat:"সব",qs:"",pid:null,sel:{c:null,z:null,q:1}};
+var st={products:SEED.slice(),orders:[],cart:{},addr:null,view:"shop",cat:"সব",qs:"",pid:null,role:"buyer",sort:"new",sel:{c:null,z:null,q:1}};
 function load(){st.sold={};
   try{
     var sv=JSON.parse(localStorage.getItem("bb_state")||"null");
@@ -176,14 +208,14 @@ function load(){st.sold={};
     else if(sv.products)mine=sv.products.filter(function(p){return p.id>100000}); /* v1 থেকে মাইগ্রেশন: শুধু ইউজারের তোলা পণ্য */
     mine.forEach(function(p){p.u=1});
     st.products=mine.concat(SEED);
-    st.orders=sv.orders||[];if(sv.addr&&typeof sv.addr==="object")st.addr=sv.addr;
+    st.orders=sv.orders||[];if(sv.addr&&typeof sv.addr==="object")st.addr=sv.addr;if(sv.role==="seller")st.role="seller";
     var c=sv.cart||{};
     Object.keys(c).forEach(function(k){var id=k.split("|")[0];if(st.products.some(function(p){return p.id==id})&&c[k]>0)st.cart[k.indexOf("|")<0?id+"||":k]=c[k]});
     /* স্টক ব্যবহারকারীর ডিভাইসে সংরক্ষিত বিক্রির হিসাব */
     st.sold=sv.sold||{};
   }catch(e){}
 }
-function save(){try{localStorage.setItem("bb_state",JSON.stringify({v:STATE_V,mine:st.products.filter(function(p){return p.u}),orders:st.orders,cart:st.cart,addr:st.addr,sold:st.sold}))}catch(e){}}
+function save(){try{localStorage.setItem("bb_state",JSON.stringify({v:STATE_V,mine:st.products.filter(function(p){return p.u}),orders:st.orders,cart:st.cart,addr:st.addr,sold:st.sold,role:st.role}))}catch(e){}}
 load();
 function left(p){return Math.max(0,(p.k==null?99:p.k)-((st.sold&&st.sold[p.id])||0))}
 function inCart(p){return Object.keys(st.cart).reduce(function(a,k){return a+(k.split("|")[0]==p.id?st.cart[k]:0)},0)}
@@ -198,19 +230,42 @@ function toast(m){var t=$("#toast");t.textContent=m;t.classList.add("show");clea
 function total(){return st.orders.reduce(function(a,o){return a+o.total},0)}
 
 function render(){
+  if(st.role==="seller"&&st.view==="shop")st.view="sdash";else if(st.role!=="seller"&&st.view==="sdash")st.view="shop";
+  document.body.classList.toggle("seller",st.role==="seller");
+  document.querySelectorAll(".role [data-role]").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.role===st.role)});
   document.querySelectorAll("nav [data-v]").forEach(function(b){b.classList.toggle("on",b.dataset.v===st.view)});
   var a=$("#app");
-  if(st.view==="shop")a.innerHTML=shop();else if(st.view==="item")a.innerHTML=item();else if(st.view==="done")a.innerHTML=done();else if(st.view==="sell")a.innerHTML=sell();else a.innerHTML=dash();
+  if(st.view==="shop")a.innerHTML=shop();else if(st.view==="item")a.innerHTML=item();else if(st.view==="done")a.innerHTML=done();else if(st.view==="sdash")a.innerHTML=sdash();else if(st.view==="sell")a.innerHTML=sell();else a.innerHTML=dash();
   if(st.view==="sell")bindSell();
   cartUI();
 }
+function ico(c){return /ইলেক/.test(c)?"📱":/ফ্যাশন/.test(c)?"👕":/মুদি/.test(c)?"🛒":/গৃহ/.test(c)?"🏠":/বই/.test(c)?"📚":/সৌন্দর্য/.test(c)?"💄":/খেলনা/.test(c)?"🧸":/যান/.test(c)?"🏍️":"🛍️"}
+function pcard(p){var o=left(p)<1;return '<article class="pc"><div class="pi" data-open="'+p.id+'" role="button" tabindex="0" aria-label="'+esc(p.n)+' দেখুন">'+esc(p.e)+'</div><h3 data-open="'+p.id+'">'+esc(p.n)+'</h3><div class="mu" style="font-size:.8rem">'+esc(p.s)+'</div><div class="pr">'+tk(p.p)+'</div><button class="add" data-add="'+p.id+'" aria-label="'+(o?'স্টক শেষ':'কার্টে দিন')+'"'+(o?' disabled':'')+'>🛒</button></article>'}
 function shop(){
-  var q=st.qs.trim().toLowerCase();
+  var q=st.qs.trim().toLowerCase(),sc=q||st.cat!=="সব";
   var list=st.products.filter(function(p){return(st.cat==="সব"||p.c===st.cat)&&(!q||(p.n+p.c+p.s).toLowerCase().indexOf(q)>-1)});
-  return '<section class="hero"><div><h1>দেশের সেরা পণ্য, এক জায়গায়</h1><p>যাচাইকৃত বিক্রেতার কাছ থেকে সরাসরি কিনুন। আপনার পণ্য বিক্রি করতে “বিক্রি করুন” ট্যাবে যান।</p></div>'+
-  '<div class="tot"><span>এ পর্যন্ত মোট ক্রয়</span><b>'+tk(total())+'</b><span>'+bn(st.orders.length)+'টি অর্ডার</span></div></section>'+
-  '<div class="chips">'+CATS.map(function(c){return '<button class="chip'+(c===st.cat?' on':'')+'" aria-pressed="'+(c===st.cat)+'" data-cat="'+c+'">'+c+'</button>'}).join("")+'</div>'+
-  (list.length?'<div class="grid">'+list.map(function(p){var dots=(p.cl||[]).map(function(c){return '<i style="display:inline-block;width:12px;height:12px;border-radius:50%;background:'+c.h+';border:1px solid rgba(0,0,0,.3);margin-right:3px" title="'+esc(c.n)+'"></i>'}).join("");return '<article class="card"><div class="pic" data-open="'+p.id+'" role="button" tabindex="0" aria-label="'+esc(p.n)+' দেখুন">'+esc(p.e)+'</div><div class="cb"><span class="mu">'+esc(p.c)+'</span><h3 data-open="'+p.id+'">'+esc(p.n)+'</h3><span class="mu">বিক্রেতা: '+esc(p.s)+'</span><div>'+dots+(left(p)<1?'<span class="badge warn">স্টক শেষ</span>':'')+'</div><div class="row"><span class="price">'+tk(p.p)+'</span><button class="btn" data-open="'+p.id+'">দেখুন</button></div></div></article>'}).join("")+'</div>':'<div class="empty">কোনো পণ্য পাওয়া যায়নি। অন্য শব্দ বা ক্যাটাগরি চেষ্টা করুন।</div>');
+  if(st.sort==="asc")list.sort(function(a,b){return a.p-b.p});else if(st.sort==="desc")list.sort(function(a,b){return b.p-a.p});
+  var tiles=CATS.slice(1).concat(["সব"]).map(function(c){return '<button class="tile" data-cat="'+c+'" aria-pressed="'+(c===st.cat)+'"><span aria-hidden="true">'+ico(c)+'</span>'+(c==="সব"?"সব পণ্য":c)+'</button>'}).join("");
+  var sl=[["linear-gradient(120deg,#0b6b4f,#2a9d55)","কেনা-বেচার জন্য আপনার সেরা সঙ্গী ❤","এখনই কিনুন →",'data-go="pop"',"🛒"],["linear-gradient(120deg,#b4380a,#ea580c)","নিজের পণ্য বিক্রি করুন, ব্যবসা বাড়ান","বিক্রি শুরু করুন →",'data-role="seller"',"🏪"],["linear-gradient(120deg,#1f4fd8,#4a7bff)","ক্যাশ অন ডেলিভারি, বিকাশ ও নগদ","অর্ডার করুন →",'data-go="pop"',"📦"]].map(function(x){return '<div class="sl" style="background:'+x[0]+'"><div><h2>'+x[1]+'</h2><button class="cta" '+x[3]+'>'+x[2]+'</button></div><div class="em" aria-hidden="true">'+x[4]+'</div></div>'}).join("");
+  var pop=st.products.slice().sort(function(a,b){return(st.sold[b.id]||0)-(st.sold[a.id]||0)}).slice(0,6);
+  return (sc?'':'<div class="bnr" aria-label="অফার">'+sl+'</div><div class="dots"><i class="on"></i><i></i><i></i></div>')+
+  '<div class="cats" id="cats">'+tiles+'</div>'+
+  (sc?'':'<div class="hd2" id="pop"><h2>🔥 জনপ্রিয় পণ্য</h2></div><div class="hrow">'+pop.map(function(p){return pcard(p)}).join("")+'</div>')+
+  '<div class="hd2"><h2>'+(q?"খোঁজার ফল":st.cat==="সব"?"সব পণ্য":esc(st.cat))+'</h2></div>'+
+  (list.length?'<div class="pg">'+list.map(function(p){return pcard(p)}).join("")+'</div>':'<div class="empty">কোনো পণ্য পাওয়া যায়নি। অন্য শব্দ বা ক্যাটাগরি চেষ্টা করুন।</div>')+
+  (sc?'':'<div class="offer"><div><b style="font-size:1.2rem">ক্যাশ অন ডেলিভারি!</b><br>পণ্য হাতে পেয়ে টাকা দিন</div><span style="font-size:3rem" aria-hidden="true">🎁</span></div>');
+}
+var NEXT={pending:"confirmed",verify:"confirmed",confirmed:"shipped",shipped:"delivered"},NL={confirmed:"অর্ডার নিশ্চিত করুন",shipped:"পাঠানো হয়েছে",delivered:"পৌঁছে গেছে"};
+function sdash(){
+  var mine=st.products.filter(function(p){return p.u}),ids=mine.map(function(p){return p.id});
+  var sales=st.orders.filter(function(o){return o.lines.some(function(l){return ids.indexOf(l.id)>-1})}),units=0,rev=0;
+  sales.forEach(function(o){o.lines.forEach(function(l){if(ids.indexOf(l.id)>-1){units+=l.q;rev+=l.p*l.q}})});
+  var stat=function(a,b){return '<div class="panel" style="padding:12px;text-align:center"><div class="mu">'+a+'</div><b style="font-size:1.25rem">'+b+'</b></div>'};
+  var prods=mine.length?mine.map(function(p){return '<div class="row panel" style="padding:10px 12px;margin:8px 0"><span>'+esc(p.e)+' <b>'+esc(p.n)+'</b><br><span class="mu">'+tk(p.p)+' · স্টক '+bn(left(p))+'</span></span><button class="btn ghost" data-del="'+p.id+'">মুছুন</button></div>'}).join(""):'<div class="empty">এখনো কোনো পণ্য তোলেননি।</div>';
+  var ords=sales.length?sales.map(function(o){var a=o.addr||{},s0=o.status||"pending";
+    var ls=o.lines.filter(function(l){return ids.indexOf(l.id)>-1}).map(function(l){return esc(l.n)+(l.col||l.sz?' ('+[l.col,l.sz].filter(Boolean).map(esc).join(", ")+')':'')+' × '+bn(l.q)}).join("<br>");
+    return '<div class="panel" style="padding:12px;margin:8px 0"><div class="row" style="margin:0 0 6px"><b>অর্ডার #'+bn(o.no)+'</b><span class="badge'+(s0==="verify"?' warn':'')+'">'+(ST_BN[s0]||"")+'</span></div><div>'+ls+'</div><div class="mu" style="margin:6px 0">'+(a.r?esc(a.r)+', '+esc(a.ph)+'<br>'+esc(a.ln)+', '+esc(a.up)+', '+esc(a.ds)+', '+esc(a.dv):'ঠিকানা নেই')+'</div><div>'+payName(o.pay)+(o.tx?' · TrxID '+esc(o.tx)+' ('+esc(o.pf)+')':'')+'</div>'+(NEXT[s0]?'<button class="btn" style="margin-top:8px" data-st="'+o.no+'|'+NEXT[s0]+'">'+NL[NEXT[s0]]+'</button>':'')+'</div>'}).join(""):'<div class="empty">এখনো আপনার পণ্যের কোনো অর্ডার আসেনি।</div>';
+  return '<h2>🏪 আমার দোকান</h2><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">'+stat("পণ্য",bn(mine.length))+stat("বিক্রি",bn(units)+"টি")+stat("আয়",tk(rev))+'</div><div class="hd2"><h2>আমার পণ্য</h2><button class="btn" data-v="sell">+ পণ্য তুলুন</button></div>'+prods+'<div class="hd2"><h2>আমার পণ্যের অর্ডার</h2></div>'+ords;
 }
 function item(){
   var p=st.products.find(function(x){return x.id==st.pid});
@@ -289,7 +344,7 @@ function cartUI(){
     var dot=v.c?'<i style="display:inline-block;width:12px;height:12px;border-radius:50%;background:'+colHex(p,v.c)+';border:1px solid rgba(0,0,0,.3);margin-right:5px"></i>':'';
     return '<div class="it"><span class="e">'+esc(p.e)+'</span><div class="n"><div>'+esc(p.n)+'</div>'+(meta?'<span class="mu">'+dot+meta+'</span><br>':'')+'<span class="mu">'+tk(p.p)+'</span></div><div class="q"><button data-dec="'+esc(k)+'" aria-label="কমান">−</button> '+bn(q)+' <button data-inc="'+esc(k)+'" aria-label="বাড়ান">+</button></div></div>'}).join("");
   $("#items").innerHTML=h||'<div class="empty">কার্ট খালি। পছন্দের পণ্য যোগ করুন।</div>';
-  $("#cc").textContent=bn(n);$("#ct").textContent=tk(sum);$("#buy").disabled=!n;
+  $("#cc").textContent=bn(n);$("#cc").hidden=!n;$("#ct").textContent=tk(sum);$("#buy").disabled=!n;
 }
 var DIVS=["ঢাকা","চট্টগ্রাম","রাজশাহী","খুলনা","বরিশাল","সিলেট","রংপুর","ময়মনসিংহ"];
 $("#dvSel").innerHTML='<option value="">বাছাই করুন</option>'+DIVS.map(function(d){return '<option>'+d+'</option>'}).join("");
@@ -343,6 +398,18 @@ document.addEventListener("click",function(e){
   var t=e.target.closest("button,[data-open]");if(!t)return;
   if(t.dataset.v){st.view=t.dataset.v;render();window.scrollTo(0,0)}
   else if(t.dataset.cat){st.cat=t.dataset.cat;render()}
+  else if(t.dataset.role){st.role=t.dataset.role;st.view=st.role==="seller"?"sdash":"shop";save();render();window.scrollTo(0,0)}
+  else if(t.dataset.go){if(st.view!=="shop"){st.view="shop";render()}var el=document.getElementById(t.dataset.go);if(!el){st.cat="সব";st.qs="";$("#q").value="";render();el=document.getElementById(t.dataset.go)}if(el)el.scrollIntoView({behavior:"smooth"})}
+  else if(t.dataset.st){var sa=t.dataset.st.split("|"),od=st.orders.find(function(o){return o.no==sa[0]});if(od){od.status=sa[1];if(sa[1]==="delivered"||(sa[1]==="confirmed"&&od.pay!=="cod"))od.paid=true;save();render();toast("অর্ডারের অবস্থা বদলানো হয়েছে")}}
+  else if(t.dataset.del){var dp=st.products.find(function(x){return x.id==t.dataset.del});if(dp&&dp.u&&confirm("পণ্যটি মুছবেন?")){st.products=st.products.filter(function(x){return x!==dp});save();render()}}
+  else if(t.id==="bell")toast("নতুন কোনো নোটিফিকেশন নেই")
+  else if(t.id==="flt"){var so=["new","asc","desc"],nm={"new":"নতুন আগে",asc:"কম দাম আগে",desc:"বেশি দাম আগে"};st.sort=so[(so.indexOf(st.sort)+1)%3];st.view="shop";render();toast("সাজানো: "+nm[st.sort])}
+  else if(t.dataset.add){
+    var pa=st.products.find(function(x){return x.id==t.dataset.add});if(!pa)return;
+    if((pa.cl&&pa.cl.length)||(pa.sz&&pa.sz.length)){st.pid=pa.id;st.sel={c:null,z:null,q:1};st.view="item";render();window.scrollTo(0,0);toast("রং/সাইজ বেছে কার্টে দিন")}
+    else if(inCart(pa)>=left(pa)){toast("এর বেশি স্টকে নেই")}
+    else{var k0=ck(pa.id,"","");st.cart[k0]=(st.cart[k0]||0)+1;save();cartUI();toast("কার্টে যোগ হয়েছে")}
+  }
   else if(t.dataset.open){st.pid=+t.dataset.open;st.sel={c:null,z:null,q:1};st.view="item";render();window.scrollTo(0,0)}
   else if(t.dataset.color){st.sel.c=t.dataset.color;render()}
   else if(t.dataset.size){st.sel.z=t.dataset.size;render()}
@@ -363,6 +430,8 @@ document.addEventListener("click",function(e){
   else if(t.id==="backCart")setStep("cart");
 });
 $("#q").addEventListener("input",function(e){st.qs=e.target.value;if(st.view!=="shop")st.view="shop";render()});
+document.addEventListener("scroll",function(e){var b=e.target;if(b.classList&&b.classList.contains("bnr")){var i=Math.round(b.scrollLeft/b.clientWidth);document.querySelectorAll(".dots i").forEach(function(d,k){d.classList.toggle("on",k===i)})}},true);
+if(!window.matchMedia("(prefers-reduced-motion: reduce)").matches)setInterval(function(){var b=document.querySelector(".bnr");if(!b||st.view!=="shop"||document.hidden)return;b.scrollTo({left:((Math.round(b.scrollLeft/b.clientWidth)+1)%3)*b.clientWidth,behavior:"smooth"})},4500);
 render();
 if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})})}
 </script>
