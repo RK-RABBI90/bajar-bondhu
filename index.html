@@ -136,6 +136,11 @@ nav.bn button.plus{margin-top:-30px;color:var(--tx);font-weight:700}nav.bn butto
 .si{position:absolute;left:16px;top:50%;transform:translateY(-50%);z-index:1}.search input{padding-left:44px}
 .role button{font-size:1.2rem;padding:12px}
 .dots{margin:-26px 0 18px;position:relative;z-index:1}.dots i{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.55)}.dots i.on{background:#fff}
+.atabs{display:flex;margin:0 0 18px}.atabs button{flex:1;border:0;background:none;padding:12px;font-weight:700;font-size:1rem;color:var(--mu);border-bottom:3px solid var(--ln)}.atabs button[aria-pressed=true]{color:var(--br);border-bottom-color:var(--br)}
+.ab{display:flex;align-items:center;width:100%;border:0;padding:14px 16px;font-size:1.05rem;font-weight:700;gap:12px;margin:0 0 10px;border-radius:4px}.ab i{font-style:normal;flex:0 0 28px;font-size:1.3rem;text-align:center}.ab span{flex:1;text-align:center;margin-right:28px}
+.ab.m{background:var(--br);color:#fff}.ab.g{background:#4285f4;color:#fff}.ab.f{background:#eff1f6;color:#111}
+.gi,.fi{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-family:Arial,sans-serif;font-size:1.05rem!important}.gi{background:#fff;color:#4285f4}.fi{background:#1877f2;color:#fff}
+.aor{text-align:center;margin:14px 0}.x{position:absolute;top:8px;right:12px;border:0;background:none;font-size:1.4rem;color:var(--tx)}
 #toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--tx);color:var(--bg);padding:10px 18px;border-radius:10px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:50}
 #toast.show{opacity:1}
 .empty{text-align:center;color:var(--mu);padding:30px}
@@ -219,7 +224,7 @@ var STATE_V=3;
 var PAY={bkash:"০১XXXXXXXXX",nagad:"০১XXXXXXXXX"};
 var SB={url:"",key:""}; /* ← OTP চালু করতে Supabase-এর Project URL ও anon key এখানে বসান */ /* ← এখানে নিজের বিকাশ/নগদ নম্বর বসান */
 var STOCK_KEY="sold";
-var st={products:SEED.slice(),orders:[],cart:{},addr:null,view:"shop",cat:"সব",qs:"",pid:null,role:"buyer",sort:"new",users:[],user:null,am:"login",back:null,ot:null,om:"email",sel:{c:null,z:null,q:1}};
+var st={products:SEED.slice(),orders:[],cart:{},addr:null,view:"shop",cat:"সব",qs:"",pid:null,role:"buyer",sort:"new",users:[],user:null,am:"login",back:null,ot:null,om:"phone",ap:false,sel:{c:null,z:null,q:1}};
 function load(){st.sold={};
   try{
     var sv=JSON.parse(localStorage.getItem("bb_state")||"null");
@@ -256,14 +261,14 @@ function render(){
   document.querySelectorAll(".role [data-role]").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.role===st.role)});
   document.querySelectorAll("nav [data-v]").forEach(function(b){b.classList.toggle("on",b.dataset.v===st.view)});
   var a=$("#app");
-  if(st.view==="shop")a.innerHTML=shop();else if(st.view==="item")a.innerHTML=item();else if(st.view==="done")a.innerHTML=done();else if(st.view==="auth")a.innerHTML=auth();else if(st.view==="sdash")a.innerHTML=sdash();else if(st.view==="sell")a.innerHTML=sell();else a.innerHTML=dash();
+  if(st.view==="shop")a.innerHTML=shop();else if(st.view==="item")a.innerHTML=item();else if(st.view==="done")a.innerHTML=done();else if(st.view==="auth")a.innerHTML=auth();else if(st.view==="guest")a.innerHTML=guest();else if(st.view==="sdash")a.innerHTML=sdash();else if(st.view==="sell")a.innerHTML=sell();else a.innerHTML=dash();
   if(st.view==="sell")bindSell();
   cartUI();
 }
 function me(){return st.users.find(function(u){return u.ph===st.user})||null}
 function eff(p){return Math.round(p.p*(100-(p.dc||0))/100)}
 function mineP(p){return p.u&&(!p.o||p.o===st.user)}
-function gate(b){if(st.user)return false;st.back=b;st.view="auth";render();window.scrollTo(0,0);toast("আগে লগইন বা সাইন আপ করুন");return true}
+function gate(b){if(st.user)return false;st.back=b;st.view=(b==="dash"||b==="sdash")?"guest":"auth";render();window.scrollTo(0,0);if(st.view==="auth")toast("আগে লগইন বা সাইন আপ করুন");return true}
 function cbtn(x){var l=864e5-(Date.now()-(x.ts||0));return x.ts&&l>0&&/^(pending|verify|confirmed)$/.test(x.status||"pending")?'<br><button class="btn ghost" style="padding:2px 10px;margin-top:4px" data-cancel="'+x.no+'">বাতিল করুন ('+bn(Math.ceil(l/36e5))+' ঘণ্টা বাকি)</button>':''}
 function sbPost(path,body){return fetch(SB.url+"/auth/v1/"+path,{method:"POST",headers:{"Content-Type":"application/json",apikey:SB.key},body:JSON.stringify(body)}).then(function(r){return r.json().catch(function(){return{}}).then(function(j){return{ok:r.ok,s:r.status,j:j}})})}
 function otpBody(o,x){var b=o.m==="email"?{email:o.c}:{phone:"+88"+o.c};for(var k in x)b[k]=x[k];return b}
@@ -282,15 +287,15 @@ function loggedIn(o){
   st.view=st.role==="seller"?"sdash":(b==="sell"||b==="dash")?b:"shop";save();render();window.scrollTo(0,0);toast("স্বাগতম, "+u.nm);
   if(b==="chk"){openCart();startCheckout()}
 }
+function guest(){return '<div class="panel" style="text-align:center;padding:30px 16px;max-width:520px;margin:14px auto"><p style="color:var(--mu);font-size:1.1rem">আপনি এখনো লগইন করেননি</p><div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap"><button class="btn ghost" data-v="shop">কেনাকাটা করুন</button><button class="btn" data-auth="1">সাইন ইন / সাইন আপ</button></div></div>'}
 function auth(){
-  if(!SB.url)return '<div class="panel" style="max-width:480px;margin:14px auto"><h2 style="margin-top:0">সাইন আপ / লগইন</h2><p>OTP সেবা শীঘ্রই চালু হচ্ছে। কিছুক্ষণ পরে আবার চেষ্টা করুন।</p><button class="btn ghost" data-v="shop">← বাজারে ফিরুন</button></div>';
-  var su=st.am==="signup",o=st.ot,m=st.om||"email",body;
-  var tabs='<div class="role" style="margin:0 0 14px"><button data-am="login" aria-pressed="'+!su+'">লগইন</button><button data-am="signup" aria-pressed="'+su+'">সাইন আপ</button></div>';
-  if(o&&o.step===2)body='<p>'+(o.m==="email"?"ইমেইলে":"ফোনে")+' একটি কোড পাঠানো হয়েছে:<br><b>'+esc(o.c)+'</b></p><label>OTP কোড<input name="code" inputmode="numeric" autocomplete="one-time-code" maxlength="8" required></label><div class="err" id="aerr" role="alert"></div><button class="btn" type="submit">যাচাই করুন</button><div style="display:flex;gap:8px"><button class="btn ghost" type="button" data-oback="1">← বদলান</button><button class="btn ghost" type="button" data-ore="1">আবার পাঠান</button></div>';
-  else body='<div class="role" style="margin:0"><button type="button" data-om="email" aria-pressed="'+(m==="email")+'">📧 ইমেইল (Gmail)</button><button type="button" data-om="phone" aria-pressed="'+(m==="phone")+'">📱 ফোন</button></div>'+
-    (su?'<label>পূর্ণ নাম<input name="nm" required maxlength="60" autocomplete="name"></label>':'')+
-    '<label>'+(m==="email"?"ইমেইল":"মোবাইল নম্বর")+'<input name="ct" type="'+(m==="email"?"email":"tel")+'" required placeholder="'+(m==="email"?"you@gmail.com":"01XXXXXXXXX")+'" autocomplete="'+(m==="email"?"email":"tel")+'"></label><div class="err" id="aerr" role="alert"></div><button class="btn" type="submit">OTP পাঠান</button>';
-  return '<div class="panel" style="max-width:480px;margin:14px auto">'+tabs+'<form id="of" novalidate>'+body+'</form></div>';
+  if(!SB.url)return '<div class="panel" style="max-width:480px;margin:14px auto"><h2 style="margin-top:0">সাইন আপ / লগইন</h2><p>লগইন সেবা শীঘ্রই চালু হচ্ছে। কিছুক্ষণ পরে আবার চেষ্টা করুন।</p><button class="btn ghost" data-v="shop">← বাজারে ফিরুন</button></div>';
+  var su=st.am==="signup",o=st.ot,lg=document.querySelector(".logo img"),nm=su?"সাইন আপ":"লগইন",body;
+  var btn=function(c,ic,t,a){return '<button class="ab '+c+'" '+a+'><i'+(c==="g"?' class="gi"':c==="f"?' class="fi"':"")+'>'+ic+'</i><span>'+t+'</span></button>'};
+  if(o&&o.step===2)body='<p>ফোনে একটি কোড পাঠানো হয়েছে:<br><b>'+esc(o.c)+'</b></p><label>OTP কোড<input name="code" inputmode="numeric" autocomplete="one-time-code" maxlength="8" required></label><div class="err" id="aerr" role="alert"></div><button class="btn" type="submit">যাচাই করুন</button><div style="display:flex;gap:8px"><button class="btn ghost" type="button" data-oback="1">← বদলান</button><button class="btn ghost" type="button" data-ore="1">আবার পাঠান</button></div>';
+  else if(st.ap)body=(su?'<label>পূর্ণ নাম<input name="nm" required maxlength="60" autocomplete="name"></label>':"")+'<label>মোবাইল নম্বর<input name="ct" type="tel" inputmode="tel" required placeholder="01XXXXXXXXX" autocomplete="tel"></label><div class="err" id="aerr" role="alert"></div><button class="btn" type="submit">OTP পাঠান</button><button class="btn ghost" type="button" data-oback="1">← অন্য উপায়</button>';
+  else body=(su?btn("m","📱","মোবাইল নম্বর দিয়ে সাইন আপ",'data-ostart="1"')+'<div class="aor">অথবা</div>':"")+btn("g","G","Google দিয়ে "+nm,'data-oauth="google"')+btn("f","f","Facebook দিয়ে "+nm,'data-oauth="facebook"')+(su?"":'<p style="text-align:center"><button class="btn ghost" style="border:0" data-ostart="1">📱 মোবাইল নম্বর (OTP) দিয়ে লগইন</button></p>');
+  return '<div class="panel" style="max-width:480px;margin:14px auto;position:relative"><button class="x" data-v="shop" aria-label="বন্ধ করুন">✕</button>'+(lg?'<div style="text-align:center"><img src="'+lg.src+'" alt="" height="48"></div>':"")+'<div class="atabs"><button data-am="login" aria-pressed="'+!su+'">লগইন</button><button data-am="signup" aria-pressed="'+su+'">সাইন আপ</button></div>'+((st.ap||o)?'<form id="of" novalidate>'+body+'</form>':body)+'</div>';
 }
 function ico(c){return /ইলেক/.test(c)?"📱":/ফ্যাশন/.test(c)?"👕":/মুদি/.test(c)?"🛒":/গৃহ/.test(c)?"🏠":/বই/.test(c)?"📚":/সৌন্দর্য/.test(c)?"💄":/খেলনা/.test(c)?"🧸":/যান/.test(c)?"🏍️":"🛍️"}
 function pcard(p){var o=left(p)<1;return '<article class="pc"><div class="pi" data-open="'+p.id+'" role="button" tabindex="0" aria-label="'+esc(p.n)+' দেখুন">'+esc(p.e)+(p.dc?'<span class="dt">−'+bn(p.dc)+'%</span>':'')+'</div><h3 data-open="'+p.id+'">'+esc(p.n)+'</h3><div class="mu" style="font-size:.8rem">'+esc(p.s)+'</div><div class="pr">'+tk(eff(p))+(p.dc?' <s>'+tk(p.p)+'</s>':'')+'</div><button class="add" data-add="'+p.id+'" aria-label="'+(o?'স্টক শেষ':'কার্টে দিন')+'"'+(o?' disabled':'')+'>🛒</button></article>'}
@@ -400,7 +405,7 @@ function cartUI(){
     var meta=[v.c,v.z].filter(Boolean).map(esc).join(" · ");
     var dot=v.c?'<i style="display:inline-block;width:12px;height:12px;border-radius:50%;background:'+colHex(p,v.c)+';border:1px solid rgba(0,0,0,.3);margin-right:5px"></i>':'';
     return '<div class="it"><span class="e">'+esc(p.e)+'</span><div class="n"><div>'+esc(p.n)+'</div>'+(meta?'<span class="mu">'+dot+meta+'</span><br>':'')+'<span class="mu">'+tk(eff(p))+'</span></div><div class="q"><button data-dec="'+esc(k)+'" aria-label="কমান">−</button> '+bn(q)+' <button data-inc="'+esc(k)+'" aria-label="বাড়ান">+</button></div></div>'}).join("");
-  $("#items").innerHTML=h||'<div class="empty">কার্ট খালি। পছন্দের পণ্য যোগ করুন।</div>';
+  $("#items").innerHTML=h||'<div class="empty">আপনি এখনো কিছু যোগ করেননি'+(st.user?"":'<br><br><button class="btn" data-auth="1">সাইন ইন / সাইন আপ</button>')+'</div>';
   $("#cc").textContent=bn(n);$("#cc").hidden=!n;$("#ct").textContent=tk(sum);$("#buy").disabled=!n;
 }
 var DIVS=["ঢাকা","চট্টগ্রাম","রাজশাহী","খুলনা","বরিশাল","সিলেট","রংপুর","ময়মনসিংহ"];
@@ -469,9 +474,12 @@ document.addEventListener("click",function(e){
   var t=e.target.closest("button,[data-open]");if(!t)return;
   if(t.dataset.v){if(/^(sell|dash|sdash)$/.test(t.dataset.v)&&gate(t.dataset.v))return;st.view=t.dataset.v;render();window.scrollTo(0,0)}
   else if(t.dataset.cat){st.cat=t.dataset.cat;render()}
-  else if(t.dataset.am){st.am=t.dataset.am;st.ot=null;render()}
+  else if(t.dataset.am){st.am=t.dataset.am;st.ot=null;st.ap=false;render()}
+  else if(t.dataset.ostart){st.om="phone";st.ap=true;render()}
+  else if(t.dataset.auth){closeCart(true);st.view="auth";render();window.scrollTo(0,0)}
+  else if(t.dataset.oauth){try{sessionStorage.setItem("bb_back",st.back||"")}catch(x){}location.href=SB.url+"/auth/v1/authorize?provider="+t.dataset.oauth+"&redirect_to="+encodeURIComponent(location.origin+location.pathname)}
   else if(t.dataset.om){st.om=t.dataset.om;render()}
-  else if(t.dataset.oback){st.ot=null;render()}
+  else if(t.dataset.oback){st.ot=null;st.ap=false;render()}
   else if(t.dataset.ore){if(st.ot)otpSend(st.ot,true)}
   else if(t.dataset.logout){st.user=null;st.role="buyer";st.view="shop";save();render();toast("লগআউট হয়েছে")}
   else if(t.dataset.cancel){var oc=st.orders.find(function(o){return o.no==t.dataset.cancel});if(oc&&cbtn(oc)&&confirm("অর্ডারটি বাতিল করবেন?")){oc.status="cancelled";oc.lines.forEach(function(l){st.sold[l.id]=Math.max(0,(st.sold[l.id]||0)-l.q)});save();render();toast("অর্ডার বাতিল হয়েছে"+(oc.pay!=="cod"?"। পেমেন্ট ফেরতের জন্য বিক্রেতা যোগাযোগ করবেন":""))}else toast("২৪ ঘণ্টা পার হয়েছে বা অর্ডার পাঠানো হয়ে গেছে")}
@@ -511,6 +519,14 @@ $("#q").addEventListener("input",function(e){st.qs=e.target.value;if(st.view!=="
 document.addEventListener("scroll",function(e){var b=e.target;if(b.classList&&b.classList.contains("bnr")){var i=Math.round(b.scrollLeft/b.clientWidth);document.querySelectorAll(".dots i").forEach(function(d,k){d.classList.toggle("on",k===i)})}},true);
 if(!window.matchMedia("(prefers-reduced-motion: reduce)").matches)setInterval(function(){var b=document.querySelector(".bnr");if(!b||st.view!=="shop"||document.hidden)return;b.scrollTo({left:((Math.round(b.scrollLeft/b.clientWidth)+1)%3)*b.clientWidth,behavior:"smooth"})},4500);
 render();
+if(SB.url&&/access_token=/.test(location.hash)){
+  var oq=new URLSearchParams(location.hash.slice(1)),otk=oq.get("access_token");history.replaceState(null,"",location.pathname+location.search);
+  fetch(SB.url+"/auth/v1/user",{headers:{apikey:SB.key,Authorization:"Bearer "+otk}}).then(function(r){return r.json()}).then(function(u){
+    var id=u.email||u.phone;if(!id)throw 0;var md=u.user_metadata||{};
+    try{st.back=sessionStorage.getItem("bb_back")||null}catch(x){}
+    loggedIn({c:id,nm:md.full_name||md.name||"",m:u.email?"email":"phone"});
+  }).catch(function(){toast("লগইন করা যায়নি। আবার চেষ্টা করুন।")});
+}
 if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})})}
 </script>
 </body>
